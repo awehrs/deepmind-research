@@ -16,6 +16,7 @@
 import abc
 import functools
 
+from einops import repeat
 import haiku as hk
 import jax
 import jax.numpy as jnp
@@ -130,10 +131,9 @@ class TrainablePositionEncoding(AbstractPositionEncoding):
             init=hk.initializers.TruncatedNormal(stddev=self._init_scale),
         )
 
+        # Broadcast to batch dimension.
         if batch_size is not None:
-            pos_embs = jnp.broadcast_to(
-                pos_embs[None, :, :], (batch_size,) + pos_embs.shape
-            )
+            pos_embs = repeat(pos_embs, "... -> b ...", b=batch_size)
         return pos_embs
 
 

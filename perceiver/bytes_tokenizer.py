@@ -18,48 +18,49 @@ import numpy as np
 
 
 class BytesTokenizer:
-  """Tokenizes string to utf-8 bytes."""
+    """Tokenizes string to utf-8 bytes."""
 
-  def __init__(self):
-    self._num_reserved_tokens = 6  # PAD, BOS, EOS, MASK, CLS, SEP
+    def __init__(self):
+        self._num_reserved_tokens = 6  # PAD, BOS, EOS, MASK, CLS, SEP
 
-  def to_string(self, inputs: np.ndarray) -> str:
-    inputs_no_special = (
-        inputs[inputs >= self._num_reserved_tokens] - self._num_reserved_tokens)
-    decoded_bytes = inputs_no_special.astype(np.uint8).tobytes()
-    return decoded_bytes.decode('utf-8', errors='replace')
+    def to_string(self, inputs: np.ndarray) -> str:
+        inputs_no_special = (
+            inputs[inputs >= self._num_reserved_tokens] - self._num_reserved_tokens
+        )
+        decoded_bytes = inputs_no_special.astype(np.uint8).tobytes()
+        return decoded_bytes.decode("utf-8", errors="replace")
 
-  def to_int(self, inputs: Union[str, bytes]) -> np.ndarray:
-    if isinstance(inputs, str):
-      inputs = inputs.encode('utf-8')
-    encoded = np.frombuffer(inputs, np.uint8).astype(np.int32)
-    encoded = encoded + self._num_reserved_tokens
-    return encoded.astype(np.int32)
+    def to_int(self, inputs: Union[str, bytes]) -> np.ndarray:
+        if isinstance(inputs, str):
+            inputs = inputs.encode("utf-8")
+        encoded = np.frombuffer(inputs, np.uint8).astype(np.int32)
+        encoded = encoded + self._num_reserved_tokens
+        return encoded.astype(np.int32)
 
-  @property
-  def vocab_size(self) -> int:
-    return 256 + self._num_reserved_tokens
+    @property
+    def vocab_size(self) -> int:
+        return 256 + self._num_reserved_tokens
 
-  @property
-  def pad_token(self) -> int:
-    return 0
+    @property
+    def pad_token(self) -> int:
+        return 0
 
-  @property
-  def bos_token(self) -> int:
-    return 1
+    @property
+    def bos_token(self) -> int:
+        return 1
 
-  @property
-  def eos_token(self) -> int:
-    return 2
+    @property
+    def eos_token(self) -> int:
+        return 2
 
-  @property
-  def mask_token(self) -> int:
-    return 3
+    @property
+    def mask_token(self) -> int:
+        return 3
 
-  @property
-  def cls_token(self) -> int:
-    return 4
+    @property
+    def cls_token(self) -> int:
+        return 4
 
-  @property
-  def sep_token(self) -> int:
-    return 5
+    @property
+    def sep_token(self) -> int:
+        return 5

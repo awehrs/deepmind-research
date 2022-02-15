@@ -52,7 +52,7 @@ Scalars = Mapping[Text, jnp.ndarray]
 
 
 N_TRAIN_EXAMPLES = dataset.Split.TRAIN_AND_VALID.num_examples
-N_CLASSES = 1000
+N_CLASSES = 10
 # Only local/debug parameters are supported out of the box.
 # To use the scaled-up hyperparameters, please adapt this script to your
 # training setup and set this flag to False
@@ -69,9 +69,9 @@ def get_config():
     config = base_config.get_base_config()
 
     # Experiment config.
-    local_batch_size = 2
+    local_batch_size = 8
     # Modify this to adapt to your custom distributed learning setup
-    num_devices = 1
+    num_devices = jax.device_count()
     config.train_batch_size = local_batch_size * num_devices
     config.n_epochs = 110
 

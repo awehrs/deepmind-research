@@ -16,5 +16,5 @@
 
 # Command for running training script.
 
-PYTHONPATH=.::$PYTHONPATH python perceiver/train/experiment.py \
+PYTHONPATH=.::$PYTHONPATH python3 perceiver/train/experiment.py \
   --config=perceiver/train/experiment.py --logtostderr
